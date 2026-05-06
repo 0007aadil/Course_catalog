@@ -1,53 +1,273 @@
-.detail-page { padding: 2rem 0 6rem; }
+/* ── Course Detail Page (Awwwards-style) ── */
+.cd-page { padding-bottom: 6rem; }
 
-.breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: #aaa; margin-bottom: 2rem; }
-.breadcrumb a { color: #888; text-decoration: none; }
-.breadcrumb a:hover { color: #1a1a1a; }
-
-.detail-hero {
-  background: #fff; border: 1px solid #e8e8e4; border-radius: 18px;
-  padding: 2.5rem; margin-bottom: 2.5rem;
-}
-.instructor-badge {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  padding: 0.3rem 0.9rem 0.3rem 0.3rem; background: #f5f5f0;
-  border: 1px solid #e8e8e4; border-radius: 100px;
-  margin-bottom: 1.25rem; font-size: 0.85rem; color: #777;
-}
-.avatar {
-  width: 26px; height: 26px; border-radius: 50%; background: #e8e8e4;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.7rem; font-weight: 700;
-}
-.detail-title { font-size: clamp(1.75rem,3.5vw,2.75rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; }
-.enrolled-badge {
-  display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 1rem;
-  padding: 0.35rem 0.9rem; background: #dcfce7; border: 1px solid #bbf7d0;
-  border-radius: 100px; color: #16a34a; font-weight: 600; font-size: 0.82rem;
+/* ── Hero: Split layout ── */
+.cd-hero {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
+  min-height: 400px;
+  margin-bottom: 0;
 }
 
-.detail-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2.5rem; align-items: start; }
-.section-heading { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
-.detail-desc { font-size: 0.98rem; color: #666; line-height: 1.75; margin-bottom: 2.5rem; }
+.cd-hero-image {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cd-hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.1);
+}
+.cd-hero-icon {
+  font-size: 5rem;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
+}
 
-.syllabus { background: #fff; border: 1px solid #e8e8e4; border-radius: 16px; overflow: hidden; }
-.syllabus-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid #e8e8e4; background: #fafaf7; }
-.syllabus-header h4 { font-size: 0.92rem; font-weight: 700; margin: 0; }
-.tag { padding: 0.25rem 0.7rem; border: 1px solid #e8e8e4; border-radius: 100px; font-size: 0.75rem; font-weight: 500; color: #888; }
-.syllabus-item { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; border-bottom: 1px solid #f0f0ec; transition: background 0.15s; }
-.syllabus-item:last-child { border-bottom: none; }
-.syllabus-item:hover { background: #fafaf7; }
-.syllabus-link { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: #1a1a1a; font-weight: 500; font-size: 0.92rem; }
-.syllabus-link.disabled { color: #bbb; cursor: default; }
-.syllabus-link:hover { color: #333; }
-.lesson-num { width: 24px; height: 24px; border-radius: 6px; background: #f0f0ec; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #999; font-weight: 600; }
-.check-badge { width: 24px; height: 24px; border-radius: 50%; background: #dcfce7; display: flex; align-items: center; justify-content: center; color: #16a34a; font-size: 0.75rem; }
-.syllabus-empty { padding: 1.5rem; text-align: center; color: #aaa; font-size: 0.9rem; }
+.cd-hero-info {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
-.action-card { background: #fff; border: 1px solid #e8e8e4; border-radius: 16px; padding: 1.75rem; position: sticky; top: 72px; }
-.action-card h5 { font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; }
-.action-note { font-size: 0.9rem; color: #777; }
-.action-note a { color: #1a1a1a; font-weight: 600; text-decoration: underline; }
-.action-sub { text-align: center; font-size: 0.82rem; color: #aaa; margin-top: 0.5rem; }
+.cd-enrolled-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.8rem;
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  border-radius: 100px;
+  color: #16a34a;
+  font-weight: 600;
+  font-size: 0.78rem;
+  margin-bottom: 1rem;
+  align-self: flex-start;
+}
 
-@media (max-width: 900px) { .detail-grid { grid-template-columns: 1fr; } }
+.cd-hero-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.cd-hero-instructor {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 2rem;
+}
+.cd-hero-instructor strong { color: #1a1a1a; }
+
+.cd-hero-action { margin-top: auto; }
+
+.cd-btn-enroll {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.cd-btn-enroll:hover { background: #333; }
+.cd-btn-enroll:disabled { opacity: 0.5; cursor: not-allowed; }
+.cd-btn-go { background: #16a34a; }
+.cd-btn-go:hover { background: #15803d; }
+
+/* ── Info Bar ── */
+.cd-info-bar {
+  display: flex;
+  gap: 2.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #e5e5e0;
+  flex-wrap: wrap;
+}
+.cd-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #555;
+}
+.cd-info-icon { font-size: 1rem; }
+
+/* ── About ── */
+.cd-about {
+  padding: 2.5rem 0 3rem;
+  border-bottom: 1px solid #e5e5e0;
+}
+.cd-about-text {
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* ── Course Content (Table layout) ── */
+.cd-content {
+  padding: 4rem 0 3rem;
+}
+.cd-content-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #999;
+  margin-bottom: 0.75rem;
+}
+.cd-content-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 3rem;
+}
+
+.cd-lessons-table {
+  width: 100%;
+}
+
+.cd-lessons-header {
+  display: grid;
+  grid-template-columns: 1fr 120px 120px;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #999;
+  text-transform: capitalize;
+}
+
+.cd-lesson-row {
+  display: grid;
+  grid-template-columns: 1fr 120px 120px;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-top: 1px dashed #e0e0dc;
+  transition: background 0.15s;
+}
+.cd-lesson-row:hover { background: #fafaf7; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; border-radius: 8px; }
+
+.cd-col-lesson {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cd-lesson-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  background: #ecfdf5;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #16a34a;
+  white-space: nowrap;
+}
+
+.cd-lesson-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.cd-col-status {
+  font-size: 0.82rem;
+}
+.cd-status-done { color: #16a34a; font-weight: 600; }
+.cd-status-open { color: #888; }
+.cd-status-locked { font-size: 1rem; }
+
+.cd-col-action {
+  text-align: right;
+}
+.cd-view-btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border: 1px solid #e0e0dc;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  background: transparent;
+}
+.cd-view-btn:hover { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.cd-view-disabled { color: #ccc; border-color: #eee; cursor: default; }
+.cd-view-disabled:hover { background: transparent; color: #ccc; border-color: #eee; }
+
+/* ── Meet the Teacher ── */
+.cd-teacher {
+  padding: 4rem 0;
+  border-top: 1px solid #e5e5e0;
+  text-align: center;
+}
+.cd-teacher-label {
+  display: block;
+  font-size: 0.82rem;
+  color: #999;
+  margin-bottom: 1rem;
+}
+.cd-teacher-name {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.cd-teacher-bio {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .cd-hero {
+    grid-template-columns: 1fr;
+  }
+  .cd-hero-image {
+    min-height: 250px;
+  }
+  .cd-lessons-header,
+  .cd-lesson-row {
+    grid-template-columns: 1fr auto auto;
+    gap: 0.5rem;
+  }
+  .cd-lesson-name {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .cd-lessons-header { display: none; }
+  .cd-lesson-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .cd-col-action { text-align: left; }
+}
