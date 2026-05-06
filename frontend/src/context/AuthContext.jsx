@@ -36,7 +36,13 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await authAPI.logout();
+    try {
+      await initCsrf();
+      await authAPI.logout();
+    } catch (e) {
+      // Even if the API call fails, clear user state
+      console.error('Logout error:', e);
+    }
     setUser(null);
   };
 

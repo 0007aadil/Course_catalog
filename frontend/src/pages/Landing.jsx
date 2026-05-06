@@ -94,48 +94,23 @@ export default function Landing() {
         </div>
       </div>
 
-      <section className="features">
+      <section className="cta-cards-section">
         <div className="container">
-          <div className="features-header">
-            <h2 className="features-title">Why MOOC Catalog</h2>
-            <p className="features-sub">Everything you need to start your learning journey</p>
-          </div>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
-                </svg>
-              </div>
-              <h3>Browse Courses</h3>
-              <p>Explore a curated catalog of courses across multiple disciplines.</p>
+          <div className="cta-cards-grid">
+            <div className="cta-dark-card">
+              <span className="cta-dark-label">Start learning</span>
+              <h2 className="cta-dark-title">Browse our curated<br/>course catalog</h2>
+              <Link to="/courses" className="cta-dark-btn">Explore Courses</Link>
+              <p className="cta-dark-faq">Need help? <Link to="/signup">Create an account</Link></p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/>
-                </svg>
-              </div>
-              <h3>Track Progress</h3>
-              <p>Complete lessons and watch your progress grow with clear milestones.</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon-wrap">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
-              <h3>Expert Instructors</h3>
-              <p>Learn from faculty through a dedicated instructor dashboard.</p>
+            <div className="cta-dark-card">
+              <span className="cta-dark-label">Join us</span>
+              <h2 className="cta-dark-title">Get access to all<br/>courses for free</h2>
+              <Link to="/signup" className="cta-dark-btn">Sign Up Free</Link>
+              <p className="cta-dark-faq">Already a member? <Link to="/login">Log in</Link></p>
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="cta-section">
-        <h2 className="cta-title">Ready to start?</h2>
-        <p className="cta-desc">Create a free account. No credit card required.</p>
-        <Link to="/signup" className="btn btn-primary btn-lg">Create Account</Link>
       </section>
 
       <footer className="landing-footer">

@@ -27,22 +27,30 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card animate-in">
-        <h1 className="auth-title">Welcome back</h1>
-        <p className="auth-sub">Log in to continue learning</p>
-        {error && <div className="auth-error">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Username</label>
-            <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Enter username" required />
+      <div className="auth-split animate-in">
+        <div className="auth-left">
+          <span className="auth-welcome">Welcome!</span>
+          <div className="auth-brand-area">
+            <span className="auth-brand-logo">M.</span>
+            <span className="auth-brand-emoji">😊</span>
           </div>
-          <div className="field">
-            <label>Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter password" required />
-          </div>
-          <button type="submit" className="btn btn-primary btn-lg auth-btn">Sign In</button>
-        </form>
-        <p className="auth-footer">Don't have an account? <Link to="/signup">Sign up</Link></p>
+          <p className="auth-left-footer">Not a member yet? <Link to="/signup">Register now</Link></p>
+        </div>
+        <div className="auth-right">
+          <h1 className="auth-title">Log in</h1>
+          {error && <div className="auth-error">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <div className="field-line">
+              <label>USERNAME</label>
+              <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+            </div>
+            <div className="field-line">
+              <label>PASSWORD</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+            </div>
+            <button type="submit" className="auth-submit">Log in now</button>
+          </form>
+        </div>
       </div>
     </div>
   );

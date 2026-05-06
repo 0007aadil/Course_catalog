@@ -22,30 +22,40 @@ export default function Signup() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card animate-in">
-        <h1 className="auth-title">Create account</h1>
-        <p className="auth-sub">Join thousands of learners today</p>
-        {error && <div className="auth-error">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Username</label>
-            <input type="text" value={form.username} onChange={e => setForm({...form, username: e.target.value})} placeholder="Choose a username" required />
+      <div className="auth-split animate-in">
+        <div className="auth-left">
+          <span className="auth-welcome">Welcome!</span>
+          <div className="auth-brand-area">
+            <span className="auth-brand-logo">M.</span>
+            <span className="auth-brand-emoji">😊</span>
           </div>
-          <div className="field">
-            <label>Email</label>
-            <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="your@email.com" />
-          </div>
-          <div className="field">
-            <label>Password</label>
-            <input type="password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} placeholder="Create a password" required />
-          </div>
-          <div className="field">
-            <label>Confirm Password</label>
-            <input type="password" value={form.password2} onChange={e => setForm({...form, password2: e.target.value})} placeholder="Confirm password" required />
-          </div>
-          <button type="submit" className="btn btn-primary btn-lg auth-btn">Sign Up Free</button>
-        </form>
-        <p className="auth-footer">Already have an account? <Link to="/login">Log in</Link></p>
+          <p className="auth-left-footer">Are you a member? <Link to="/login">Log in now</Link></p>
+        </div>
+        <div className="auth-right">
+          <h1 className="auth-title">Register with your e-mail</h1>
+          {error && <div className="auth-error">{error}</div>}
+          <form onSubmit={handleSubmit}>
+            <div className="field-line">
+              <label>USERNAME (*)</label>
+              <input type="text" value={form.username} onChange={e => setForm({...form, username: e.target.value})} placeholder="Username" required />
+            </div>
+            <div className="field-line">
+              <label>EMAIL (*)</label>
+              <input type="email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} placeholder="E-mail" />
+            </div>
+            <div className="field-row">
+              <div className="field-line">
+                <label>PASSWORD (*)</label>
+                <input type="password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} placeholder="Password" required />
+              </div>
+              <div className="field-line">
+                <label>REPEAT PASSWORD (*)</label>
+                <input type="password" value={form.password2} onChange={e => setForm({...form, password2: e.target.value})} placeholder="Repeat Password" required />
+              </div>
+            </div>
+            <button type="submit" className="auth-submit">Create Account</button>
+          </form>
+        </div>
       </div>
     </div>
   );

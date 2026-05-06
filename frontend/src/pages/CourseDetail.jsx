@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { coursesAPI } from '../api/client';
+import { coursesAPI, initCsrf } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import './CourseDetail.css';
 
@@ -22,6 +22,7 @@ export default function CourseDetail() {
 
   const handleEnroll = async () => {
     try {
+      await initCsrf();
       await coursesAPI.enroll(id);
       fetchCourse();
     } catch (err) {
