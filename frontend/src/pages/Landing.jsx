@@ -1,15 +1,21 @@
 import { Link } from 'react-router-dom';
 import './Landing.css';
 
+const gradients = [
+  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+];
+
 export default function Landing() {
   return (
     <div className="landing">
       <nav className="landing-nav">
         <div className="landing-nav-inner">
-          <span className="landing-brand">W.</span>
+          <span className="landing-brand">M.</span>
           <div className="landing-nav-actions">
-            <Link to="/login" className="btn btn-ghost">Log in</Link>
-            <Link to="/signup" className="btn btn-outline">Sign Up</Link>
+            <Link to="/login" className="nav-btn-ghost">Log in</Link>
+            <Link to="/signup" className="nav-btn-fill">Sign Up</Link>
           </div>
         </div>
       </nav>
@@ -29,21 +35,25 @@ export default function Landing() {
       </section>
 
       <section className="featured-section">
-        <Link to="/courses" className="featured-card">
-          <div className="featured-img">
-            <span className="featured-img-text">Explore →</span>
+        <div className="container">
+          <div className="featured-grid">
+            {[
+              { title: 'Python Fundamentals', gradient: gradients[0] },
+              { title: 'Web Development', gradient: gradients[1] },
+              { title: 'Data Science', gradient: gradients[2] },
+            ].map((item, i) => (
+              <Link to="/courses" key={i} className="featured-card" style={{animationDelay:`${i*0.1}s`}}>
+                <div className="featured-img" style={{background: item.gradient}}>
+                  <span className="featured-img-text">{item.title}</span>
+                </div>
+                <div className="featured-body">
+                  <h3>{item.title}</h3>
+                  <span className="featured-arrow">→</span>
+                </div>
+              </Link>
+            ))}
           </div>
-          <div className="featured-body">
-            <div>
-              <h3 className="featured-title">Course Catalog</h3>
-              <p className="featured-sub">Browse all available courses and start learning today.</p>
-            </div>
-            <div className="featured-tags">
-              <span className="tag">Courses</span>
-              <span className="tag">Free</span>
-            </div>
-          </div>
-        </Link>
+        </div>
       </section>
 
       <div className="container">
@@ -65,17 +75,17 @@ export default function Landing() {
             <div className="feature-card">
               <div className="feature-icon">🔍</div>
               <h3>Browse Courses</h3>
-              <p>Explore a curated catalog across multiple disciplines.</p>
+              <p>Explore a curated catalog of courses across multiple disciplines.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">📊</div>
               <h3>Track Progress</h3>
-              <p>Complete lessons and watch your progress grow.</p>
+              <p>Complete lessons and watch your progress grow with clear milestones.</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">👨‍🏫</div>
               <h3>Expert Instructors</h3>
-              <p>Learn from faculty through dedicated dashboards.</p>
+              <p>Learn from faculty through a dedicated instructor dashboard.</p>
             </div>
           </div>
         </div>

@@ -167,7 +167,7 @@ REST_FRAMEWORK = {
 JAZZMIN_SETTINGS = {
     'site_title': 'MOOC Admin',
     'site_header': 'MOOC Catalog',
-    'site_brand': 'W.',
+    'site_brand': 'M.',
     'welcome_sign': 'Welcome to MOOC Admin',
     'copyright': 'MOOC Catalog 2026',
     'search_model': ['auth.User', 'courses.Course'],
