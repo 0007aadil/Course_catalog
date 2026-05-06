@@ -18,7 +18,7 @@ export default function Navbar() {
     <nav className="site-nav">
       <div className="nav-inner">
         <div className="nav-left">
-          <Link to={user ? '/courses' : '/'} className="nav-brand">W.</Link>
+          <Link to={user ? '/courses' : '/'} className="nav-brand">M.</Link>
           <Link to="/courses" className={isActive('/courses')}>Explore</Link>
           {user && <Link to="/my-courses" className={isActive('/my-courses')}>My Courses</Link>}
           {user && (user.role === 'admin' || user.role === 'faculty') && (
