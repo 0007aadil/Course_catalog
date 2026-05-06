@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Landing.css';
 
 const featuredCourses = [
@@ -26,14 +27,31 @@ const featuredCourses = [
 ];
 
 export default function Landing() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
+
   return (
     <div className="landing">
       <nav className="landing-nav">
         <div className="landing-nav-inner">
           <span className="landing-brand">M.</span>
           <div className="landing-nav-actions">
-            <Link to="/login" className="nav-btn-ghost">Log in</Link>
-            <Link to="/signup" className="nav-btn-fill">Sign Up</Link>
+            {user ? (
+              <>
+                <Link to="/courses" className="nav-btn-ghost">My Courses</Link>
+                <button onClick={handleLogout} className="nav-btn-fill" style={{border:'none',cursor:'pointer',fontFamily:'inherit'}}>Log out</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="nav-btn-ghost">Log in</Link>
+                <Link to="/signup" className="nav-btn-fill">Sign Up</Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
@@ -47,7 +65,7 @@ export default function Landing() {
           Discover expert-led courses, track your progress, and build skills that matter — all in one beautifully simple place.
         </p>
         <div className="hero-ctas">
-          <Link to="/signup" className="btn btn-primary btn-lg">Get Started</Link>
+          <Link to={user ? '/courses' : '/signup'} className="btn btn-primary btn-lg">{user ? 'Browse Courses' : 'Get Started'}</Link>
           <Link to="/courses" className="btn btn-outline btn-lg">Browse Courses</Link>
         </div>
       </section>

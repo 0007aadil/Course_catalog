@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { coursesAPI } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import './Courses.css';
 
 const cardImages = [
@@ -15,6 +16,7 @@ const cardImages = [
 const icons = ['💻', '🧬', '🎨', '📊', '🚀', '🎯'];
 
 export default function Courses() {
+  const { user } = useAuth();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +43,11 @@ export default function Courses() {
           <span className="promo-label">Learn from the Best</span>
           <h2 className="promo-title">Enjoy over {courses.length} Courses<br/>for Digital Learners</h2>
           <p className="promo-sub">New courses added every month.</p>
-          <Link to="/signup" className="promo-btn">Start Learning!</Link>
+          {user ? (
+            <a href="#course-grid" className="promo-btn">Start Learning!</a>
+          ) : (
+            <Link to="/signup" className="promo-btn">Start Learning!</Link>
+          )}
         </div>
 
         {/* ── Course Grid ── */}
@@ -51,7 +57,7 @@ export default function Courses() {
             <p>Check back soon!</p>
           </div>
         ) : (
-          <div className="course-grid animate-in" style={{animationDelay:'0.1s'}}>
+          <div id="course-grid" className="course-grid animate-in" style={{animationDelay:'0.1s'}}>
             {courses.map((course, i) => (
               <Link to={`/courses/${course.id}`} key={course.id} className="c-card" style={{animationDelay:`${i*0.06}s`}}>
                 <div className="c-card-img" style={{background: cardImages[i % cardImages.length]}}>
