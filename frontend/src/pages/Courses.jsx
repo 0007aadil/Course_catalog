@@ -12,6 +12,8 @@ const cardImages = [
   'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #f87171 100%)',
 ];
 
+const icons = ['💻', '🧬', '🎨', '📊', '🚀', '🎯'];
+
 export default function Courses() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -27,41 +29,40 @@ export default function Courses() {
   return (
     <div className="courses-page">
       <div className="container">
-        <div className="courses-header animate-in">
-          <h1 className="courses-title">Learn from the<br/>best instructors.</h1>
+        {/* ── Hero Header ── */}
+        <div className="courses-hero animate-in">
+          <span className="courses-label">Learn from the Best</span>
+          <h1 className="courses-heading">ACADEMY</h1>
+          <p className="courses-sub">Shape your future in technology and creative coding.</p>
         </div>
 
+        {/* ── Promo Banner ── */}
+        <div className="courses-promo animate-in" style={{animationDelay:'0.05s'}}>
+          <span className="promo-label">Learn from the Best</span>
+          <h2 className="promo-title">Enjoy over {courses.length} Courses<br/>for Digital Learners</h2>
+          <p className="promo-sub">New courses added every month.</p>
+          <Link to="/signup" className="promo-btn">Start Learning!</Link>
+        </div>
+
+        {/* ── Course Grid ── */}
         {courses.length === 0 ? (
           <div className="empty animate-in">
             <h3>No courses yet</h3>
             <p>Check back soon!</p>
           </div>
         ) : (
-          <div className="course-grid">
+          <div className="course-grid animate-in" style={{animationDelay:'0.1s'}}>
             {courses.map((course, i) => (
-              <Link to={`/courses/${course.id}`} key={course.id} className="course-card animate-in" style={{animationDelay:`${i*0.06}s`}}>
-                <div className="card-image" style={{background: cardImages[i % cardImages.length]}}>
-                  <div className="card-image-overlay">
-                    <span className="card-image-icon">
-                      {['💻', '🧬', '🎨', '📊', '🚀', '🎯'][i % 6]}
-                    </span>
-                  </div>
+              <Link to={`/courses/${course.id}`} key={course.id} className="c-card" style={{animationDelay:`${i*0.06}s`}}>
+                <div className="c-card-img" style={{background: cardImages[i % cardImages.length]}}>
+                  <span className="c-card-icon">{icons[i % icons.length]}</span>
+                  <span className="c-card-tag">{course.lesson_count} lessons</span>
                 </div>
-                <div className="card-content">
-                  <h2 className="card-title">{course.title}</h2>
-                  <p className="card-desc">{course.short_description}</p>
-                  <div className="card-meta">
-                    <div className="card-meta-row">
-                      <span className="card-meta-label">Instructor</span>
-                      <span className="card-meta-value">{course.instructor.full_name}</span>
-                    </div>
-                    <div className="card-bottom-row">
-                      <div className="card-score">
-                        <span className="card-score-text">{course.lesson_count} Lessons</span>
-                        <span className="card-score-bar"></span>
-                      </div>
-                      <span className="card-arrow">→</span>
-                    </div>
+                <div className="c-card-body">
+                  <h3 className="c-card-title">{course.title}</h3>
+                  <div className="c-card-meta">
+                    <span className="c-card-instructor">{course.instructor.full_name}</span>
+                    <span className="c-card-badge">Course</span>
                   </div>
                 </div>
               </Link>
