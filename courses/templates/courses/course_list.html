@@ -1,0 +1,172 @@
+{% extends "courses/base.html" %}
+
+{% block title %}All Courses — MOOC Catalog{% endblock %}
+
+{% block extra_css %}
+<style>
+    .course-card {
+        background: var(--surface-card);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 2rem;
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .course-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: var(--gradient-1);
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+
+    .course-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                    0 0 40px rgba(99, 102, 241, 0.1);
+    }
+
+    .course-card:hover::before {
+        opacity: 1;
+    }
+
+    .course-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background: rgba(99, 102, 241, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-light);
+    }
+
+    .course-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+        line-height: 1.3;
+    }
+
+    .course-desc {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .course-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        margin-bottom: 1.5rem;
+    }
+
+    .instructor-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: var(--gradient-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .instructor-name {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+    }
+
+    .btn-course {
+        width: 100%;
+        padding: 0.8rem;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--text-primary);
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .course-card:hover .btn-course {
+        background: var(--gradient-1);
+        border-color: transparent;
+        color: white;
+    }
+
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    .stagger-6 { animation-delay: 0.6s; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-end mb-5 animate-fade-up">
+    <div>
+        <div class="text-uppercase tracking-widest text-muted small fw-bold mb-2" style="letter-spacing: 0.1em; color: var(--primary-light) !important;">Catalog</div>
+        <h1 class="page-title mb-0">Explore <span class="gradient-text">Courses</span></h1>
+    </div>
+</div>
+
+{% if courses %}
+<div class="row g-4">
+    {% for course in courses %}
+    <div class="col-md-6 col-lg-4 animate-fade-up stagger-{{ forloop.counter|default:1 }}">
+        <a href="{% url 'course_detail' course.pk %}" class="text-decoration-none">
+            <div class="course-card">
+                <div class="course-icon">
+                    {% if forloop.counter|divisibleby:3 %}🎨{% elif forloop.counter|divisibleby:2 %}💻{% else %}🚀{% endif %}
+                </div>
+                <h2 class="course-title">{{ course.title }}</h2>
+                <p class="course-desc">{{ course.short_description }}</p>
+                
+                <div class="course-meta">
+                    <div class="instructor-avatar">
+                        {{ course.instructor.get_full_name|default:course.instructor.username|slice:":1"|upper }}
+                    </div>
+                    <div class="instructor-name">
+                        {{ course.instructor.get_full_name|default:course.instructor.username }}
+                    </div>
+                </div>
+                
+                <div class="btn-course">
+                    View Course
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info animate-fade-up text-center py-5" style="border: 1px dashed rgba(255,255,255,0.2); background: transparent;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">📭</div>
+    <h3 class="h5 text-white">No courses available yet</h3>
+    <p class="text-muted mb-0">Check back soon for new content!</p>
+</div>
+{% endif %}
+{% endblock %}
