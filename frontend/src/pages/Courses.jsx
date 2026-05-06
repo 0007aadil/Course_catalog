@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { coursesAPI } from '../api/client';
 import './Courses.css';
 
-const gradients = [
-  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-  'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-  'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-  'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-  'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)',
+const cardImages = [
+  'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
+  'linear-gradient(135deg, #2d1b69 0%, #6b21a8 50%, #a855f7 100%)',
+  'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)',
+  'linear-gradient(135deg, #134e4a 0%, #115e59 50%, #2dd4bf 100%)',
+  'linear-gradient(135deg, #78350f 0%, #b45309 50%, #fbbf24 100%)',
+  'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #f87171 100%)',
 ];
 
 export default function Courses() {
@@ -40,20 +40,27 @@ export default function Courses() {
           <div className="course-grid">
             {courses.map((course, i) => (
               <Link to={`/courses/${course.id}`} key={course.id} className="course-card animate-in" style={{animationDelay:`${i*0.06}s`}}>
-                <div className="course-img" style={{background: gradients[i % gradients.length]}}>
-                  <span className="course-img-title">{course.title}</span>
+                <div className="card-image" style={{background: cardImages[i % cardImages.length]}}>
+                  <div className="card-image-overlay">
+                    <span className="card-image-icon">
+                      {['💻', '🧬', '🎨', '📊', '🚀', '🎯'][i % 6]}
+                    </span>
+                  </div>
                 </div>
-                <div className="course-body">
-                  <h2 className="course-name">{course.title}</h2>
-                  <p className="course-desc">{course.short_description}</p>
-                  <div className="course-footer">
-                    <div className="course-meta">
-                      <span className="meta-label">Instructor</span>
-                      <span className="meta-value">{course.instructor.full_name}</span>
+                <div className="card-content">
+                  <h2 className="card-title">{course.title}</h2>
+                  <p className="card-desc">{course.short_description}</p>
+                  <div className="card-meta">
+                    <div className="card-meta-row">
+                      <span className="card-meta-label">Instructor</span>
+                      <span className="card-meta-value">{course.instructor.full_name}</span>
                     </div>
-                    <div className="course-bottom">
-                      <span className="course-lessons">{course.lesson_count} lessons</span>
-                      <span className="course-arrow">→</span>
+                    <div className="card-bottom-row">
+                      <div className="card-score">
+                        <span className="card-score-text">{course.lesson_count} Lessons</span>
+                        <span className="card-score-bar"></span>
+                      </div>
+                      <span className="card-arrow">→</span>
                     </div>
                   </div>
                 </div>
