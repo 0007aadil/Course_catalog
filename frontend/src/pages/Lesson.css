@@ -1,0 +1,20 @@
+.lesson-page { padding: 2rem 0 5rem; }
+.lesson-layout { display: flex; gap: 2.5rem; align-items: flex-start; }
+.lesson-main { flex: 1; min-width: 0; }
+.lesson-title { font-size: clamp(1.75rem,3.5vw,2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+.completed-badge { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.9rem; background: #dcfce7; border: 1px solid #bbf7d0; border-radius: 100px; color: #16a34a; font-weight: 600; font-size: 0.82rem; margin-bottom: 1.75rem; }
+.lesson-content { background: #fff; border: 1px solid #e8e8e4; border-radius: 16px; padding: 2rem; font-size: 1rem; line-height: 1.8; color: #444; }
+.lesson-content p { margin-bottom: 0.75rem; }
+.lesson-content p:last-child { margin-bottom: 0; }
+.lesson-sidebar { width: 280px; flex-shrink: 0; position: sticky; top: 72px; }
+.sidebar-card { background: #fff; border: 1px solid #e8e8e4; border-radius: 16px; overflow: hidden; }
+.sidebar-header { padding: 1rem 1.25rem; border-bottom: 1px solid #e8e8e4; background: #fafaf7; font-weight: 700; font-size: 0.88rem; }
+.sidebar-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.25rem; border-bottom: 1px solid #f0f0ec; text-decoration: none; color: #888; font-size: 0.85rem; font-weight: 500; transition: all 0.15s; }
+.sidebar-item:last-child { border-bottom: none; }
+.sidebar-item:hover { background: #fafaf7; color: #1a1a1a; }
+.sidebar-item.active { background: #f0f0ec; color: #1a1a1a; font-weight: 600; border-left: 3px solid #1a1a1a; }
+.sidebar-num { width: 20px; font-size: 0.78rem; color: #aaa; font-weight: 600; }
+.sidebar-item.active .sidebar-num { color: #1a1a1a; }
+.sidebar-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sidebar-check { color: #16a34a; font-size: 0.78rem; font-weight: 700; }
+@media (max-width: 900px) { .lesson-layout { flex-direction: column; } .lesson-sidebar { width: 100%; position: static; } }
