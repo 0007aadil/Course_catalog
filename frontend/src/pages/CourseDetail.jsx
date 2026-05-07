@@ -92,20 +92,16 @@ export default function CourseDetail() {
         {/* ── Info Bar ── */}
         <div className="cd-info-bar animate-in" style={{animationDelay:'0.06s'}}>
           <div className="cd-info-item">
-            <span className="cd-info-icon">📜</span>
             <span>Certificate of Completion</span>
           </div>
           <div className="cd-info-item">
-            <span className="cd-info-icon">📚</span>
             <span>{course.lessons.length} Lessons</span>
           </div>
           <div className="cd-info-item">
-            <span className="cd-info-icon">👤</span>
             <span>By {course.instructor.full_name}</span>
           </div>
           {course.is_enrolled && course.lessons.length > 0 && (
             <div className="cd-info-item">
-              <span className="cd-info-icon">📈</span>
               <span>{completedCount}/{course.lessons.length} Completed</span>
             </div>
           )}
