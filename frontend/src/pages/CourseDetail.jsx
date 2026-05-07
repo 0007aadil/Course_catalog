@@ -68,8 +68,17 @@ export default function CourseDetail() {
               <button onClick={handleEnroll} className="btn btn-primary btn-lg" disabled={enrolling}>
                 {enrolling ? 'Enrolling...' : 'Enroll Now — Free'}
               </button>
+            ) : completedCount === course.lessons.length && course.lessons.length > 0 ? (
+              <div style={{display:'flex', gap:'1rem', flexWrap:'wrap'}}>
+                <Link to={`/courses/${course.id}/certificate`} className="btn btn-success btn-lg">
+                  🎉 View Certificate
+                </Link>
+                <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-outline btn-lg">
+                  Review Course
+                </Link>
+              </div>
             ) : course.lessons.length > 0 ? (
-              <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-success btn-lg">
+              <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-primary btn-lg">
                 Start Learning →
               </Link>
             ) : (
