@@ -61,7 +61,6 @@ export default function FacultyDashboard() {
 
           {data.courses.length === 0 ? (
             <div className="fd-empty">
-              <div className="my-empty-icon">📝</div>
               <p>You haven't created any courses yet.</p>
               <Link
                 to="/faculty/courses/new"

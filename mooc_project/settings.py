@@ -165,11 +165,11 @@ REST_FRAMEWORK = {
 
 # Jazzmin Admin Theme
 JAZZMIN_SETTINGS = {
-    'site_title': 'MOOC Admin',
-    'site_header': 'MOOC Catalog',
+    'site_title': 'MindPath Admin',
+    'site_header': 'MindPath',
     'site_brand': 'M.',
-    'welcome_sign': 'Welcome to MOOC Admin',
-    'copyright': 'MOOC Catalog 2026',
+    'welcome_sign': 'Welcome to MindPath Admin',
+    'copyright': 'MindPath 2026',
     'search_model': ['auth.User', 'courses.Course'],
     'topmenu_links': [
         {'name': 'Home', 'url': 'admin:index', 'permissions': ['auth.view_user']},

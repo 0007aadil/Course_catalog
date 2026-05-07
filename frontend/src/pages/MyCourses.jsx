@@ -35,7 +35,6 @@ export default function MyCourses() {
         {/* ── Empty State ── */}
         {enrollments.length === 0 ? (
           <div className="my-empty animate-in">
-            <div className="my-empty-icon">📚</div>
             <h3>Your learning journey starts here</h3>
             <p>You haven't enrolled in any courses yet.</p>
             <Link to="/courses" className="btn btn-primary btn-lg" style={{marginTop:'1.25rem'}}>
