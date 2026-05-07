@@ -3,16 +3,7 @@ import { Link } from 'react-router-dom';
 import { coursesAPI } from '../api/client';
 import './MyCourses.css';
 
-const gradients = [
-  'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
-  'linear-gradient(135deg, #2d1b69 0%, #6b21a8 50%, #a855f7 100%)',
-  'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)',
-  'linear-gradient(135deg, #134e4a 0%, #115e59 50%, #2dd4bf 100%)',
-  'linear-gradient(135deg, #78350f 0%, #b45309 50%, #fbbf24 100%)',
-  'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #f87171 100%)',
-];
-
-const icons = ['💻', '🧬', '🎨', '📊', '🚀', '🎯'];
+import { getCourseImage } from '../utils/images';
 
 export default function MyCourses() {
   const [enrollments, setEnrollments] = useState([]);
@@ -60,10 +51,7 @@ export default function MyCourses() {
                 className="my-card animate-in"
                 style={{animationDelay:`${i * 0.05}s`}}
               >
-                <div className="card-image" style={{background: gradients[i % gradients.length]}}>
-                  <div className="card-image-overlay">
-                    <span className="card-icon">{icons[i % icons.length]}</span>
-                  </div>
+                <div className="card-image" style={{backgroundImage: `url(${getCourseImage(e.course.id)})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
                 </div>
                 <div className="card-body">
                   <h3 className="card-title">{e.course.title}</h3>
@@ -73,10 +61,24 @@ export default function MyCourses() {
                       <span className="my-card-label">Instructor</span>
                       <span className="my-card-value">{e.course.instructor.full_name}</span>
                     </div>
-                    <div className="my-card-bottom">
-                      <span className="my-card-date">
-                        Enrolled {new Date(e.enrolled_at).toLocaleDateString()}
-                      </span>
+                    <div className="my-card-progress">
+                      <div className="progress-text">
+                        <span>{e.completed_lessons_count || 0} of {e.course.lesson_count || 0} lessons completed</span>
+                        <span>
+                          {e.course.lesson_count > 0 
+                            ? Math.round(((e.completed_lessons_count || 0) / e.course.lesson_count) * 100) 
+                            : 0}%
+                        </span>
+                      </div>
+                      <div className="progress-bar-bg">
+                        <div 
+                          className="progress-bar-fill" 
+                          style={{width: `${e.course.lesson_count > 0 ? ((e.completed_lessons_count || 0) / e.course.lesson_count) * 100 : 0}%`}}
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div className="my-card-bottom" style={{marginTop: '0.75rem'}}>
                       <span className="my-card-arrow">Continue →</span>
                     </div>
                   </div>

@@ -65,10 +65,18 @@ class CourseDetailSerializer(serializers.ModelSerializer):
 
 class EnrollmentSerializer(serializers.ModelSerializer):
     course = CourseListSerializer(read_only=True)
+    completed_lessons_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Enrollment
-        fields = ('id', 'course', 'enrolled_at')
+        fields = ('id', 'course', 'enrolled_at', 'completed_lessons_count')
+
+    def get_completed_lessons_count(self, obj):
+        return LessonProgress.objects.filter(
+            user=obj.user,
+            lesson__course=obj.course,
+            completed=True
+        ).count()
 
 
 class UserSerializer(serializers.ModelSerializer):

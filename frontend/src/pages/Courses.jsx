@@ -4,18 +4,7 @@ import { coursesAPI } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import './Courses.css';
 
-const gradients = [
-  'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
-  'linear-gradient(135deg, #2d1b69 0%, #6b21a8 50%, #a855f7 100%)',
-  'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)',
-  'linear-gradient(135deg, #134e4a 0%, #115e59 50%, #2dd4bf 100%)',
-  'linear-gradient(135deg, #78350f 0%, #b45309 50%, #fbbf24 100%)',
-  'linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #f87171 100%)',
-  'linear-gradient(135deg, #312e81 0%, #4338ca 50%, #818cf8 100%)',
-  'linear-gradient(135deg, #064e3b 0%, #047857 50%, #34d399 100%)',
-];
-
-const icons = ['💻', '🧬', '🎨', '📊', '🚀', '🎯', '🤖', '☁️', '🔒', '📱', '⚙️', '🎓'];
+import { getCourseImage } from '../utils/images';
 
 export default function Courses() {
   const { user } = useAuth();
@@ -69,9 +58,8 @@ export default function Courses() {
                 className="co-card animate-in"
                 style={{animationDelay:`${i * 0.05}s`}}
               >
-                <div className="card-image" style={{background: gradients[i % gradients.length]}}>
-                  <div className="card-image-overlay">
-                    <span className="card-icon">{icons[i % icons.length]}</span>
+                <div className="card-image" style={{backgroundImage: `url(${getCourseImage(course.id)})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+                  <div className="card-image-overlay" style={{background: 'rgba(0,0,0,0.1)'}}>
                   </div>
                   <span className="co-card-lessons">{course.lesson_count} lessons</span>
                 </div>
