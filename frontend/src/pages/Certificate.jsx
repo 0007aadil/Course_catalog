@@ -55,7 +55,7 @@ export default function Certificate() {
 
             <div className="cert-footer">
               <div className="cert-sig">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Signature_of_John_Hancock.svg" alt="Signature" style={{width:'150px', height:'60px', objectFit: 'contain', marginBottom:'-0.5rem', opacity: 0.85, filter: 'grayscale(100%) brightness(0)'}} />
+                <div className="sig-name-cursive">{course.instructor.full_name}</div>
                 <div className="sig-line"></div>
                 <span className="sig-name">{course.instructor.full_name}</span>
                 <span className="sig-title">Lead Instructor</span>
@@ -64,7 +64,7 @@ export default function Certificate() {
                 🏅
               </div>
               <div className="cert-sig">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/George_Washington_signature.svg" alt="Signature" style={{width:'150px', height:'60px', objectFit: 'contain', marginBottom:'-0.5rem', opacity: 0.85, filter: 'grayscale(100%) brightness(0)'}} />
+                <div className="sig-name-cursive">M. Academy</div>
                 <div className="sig-line"></div>
                 <span className="sig-name">M. Academy</span>
                 <span className="sig-title">Platform Verification</span>

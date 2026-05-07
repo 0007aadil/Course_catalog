@@ -71,7 +71,7 @@ export default function CourseDetail() {
             ) : completedCount === course.lessons.length && course.lessons.length > 0 ? (
               <div style={{display:'flex', gap:'1rem', flexWrap:'wrap'}}>
                 <Link to={`/courses/${course.id}/certificate`} className="btn btn-success btn-lg">
-                  🎉 View Certificate
+                  View Certificate
                 </Link>
                 <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-outline btn-lg">
                   Review Course
@@ -79,7 +79,7 @@ export default function CourseDetail() {
               </div>
             ) : course.lessons.length > 0 ? (
               <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-primary btn-lg">
-                Start Learning →
+                Start Learning
               </Link>
             ) : (
               <button className="btn btn-outline btn-lg" disabled>Content coming soon</button>
@@ -150,7 +150,7 @@ export default function CourseDetail() {
                   <div className="cd-col-action">
                     {course.is_enrolled ? (
                       <Link to={`/courses/${course.id}/lessons/${lesson.id}`} className="btn btn-sm btn-outline">
-                        View →
+                        View
                       </Link>
                     ) : (
                       <span className="btn btn-sm btn-ghost" style={{opacity:0.4,cursor:'default'}}>Locked</span>

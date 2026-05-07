@@ -94,7 +94,7 @@ export default function Lesson() {
                 </Link>
               ) : allCompleted ? (
                 <Link to={`/courses/${course.id}/certificate`} className="btn btn-success" style={{animation: 'pulse 2s infinite'}}>
-                  🎉 View Certificate
+                  View Certificate
                 </Link>
               ) : (
                 <span className="btn btn-ghost" style={{pointerEvents:'none'}}>Course Complete!</span>

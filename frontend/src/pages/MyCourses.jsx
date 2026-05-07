@@ -80,9 +80,9 @@ export default function MyCourses() {
 
                     <div className="my-card-bottom" style={{marginTop: '0.75rem'}}>
                       {e.completed_lessons_count === e.course.lesson_count && e.course.lesson_count > 0 ? (
-                        <span className="my-card-arrow" style={{color: 'var(--accent-green)'}}>View Certificate →</span>
+                        <span className="my-card-arrow" style={{color: 'var(--accent-green)'}}>View Certificate</span>
                       ) : (
-                        <span className="my-card-arrow">Continue →</span>
+                        <span className="my-card-arrow">Continue</span>
                       )}
                     </div>
                   </div>

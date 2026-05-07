@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
+
 .cert-page {
   min-height: 100vh;
   background: var(--bg);
@@ -90,6 +92,15 @@
 .sig-line {
   border-bottom: 1px solid #111;
   margin-bottom: 0.75rem;
+}
+
+.sig-name-cursive {
+  font-family: 'Mrs Saint Delafield', cursive;
+  font-size: 3.5rem;
+  color: #111;
+  margin-bottom: -0.5rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 .sig-name {
