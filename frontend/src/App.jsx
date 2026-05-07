@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Landing from './pages/Landing';
@@ -22,6 +22,30 @@ function LoadingScreen() {
   );
 }
 
+/* Redirect logged-in users away from auth pages */
+function GuestOnly({ children }) {
+  const { user } = useAuth();
+  if (!user) return children;
+  // Redirect based on role
+  if (user.role === 'admin' || user.role === 'faculty') return <Navigate to="/faculty" replace />;
+  return <Navigate to="/courses" replace />;
+}
+
+/* Require authentication */
+function RequireAuth({ children }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
+
+/* Require admin or faculty role */
+function RequireFaculty({ children }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== 'admin' && user.role !== 'faculty') return <Navigate to="/courses" replace />;
+  return children;
+}
+
 function AppContent() {
   const location = useLocation();
   const { loading } = useAuth();
@@ -34,13 +58,19 @@ function AppContent() {
       {!isLanding && <Navbar />}
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<GuestOnly><Login /></GuestOnly>} />
+        <Route path="/signup" element={<GuestOnly><Signup /></GuestOnly>} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<CourseDetail />} />
-        <Route path="/courses/:courseId/lessons/:lessonId" element={<Lesson />} />
-        <Route path="/my-courses" element={<MyCourses />} />
-        <Route path="/faculty" element={<FacultyDashboard />} />
+        <Route path="/courses/:courseId/lessons/:lessonId" element={
+          <RequireAuth><Lesson /></RequireAuth>
+        } />
+        <Route path="/my-courses" element={
+          <RequireAuth><MyCourses /></RequireAuth>
+        } />
+        <Route path="/faculty" element={
+          <RequireFaculty><FacultyDashboard /></RequireFaculty>
+        } />
       </Routes>
     </>
   );
