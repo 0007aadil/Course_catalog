@@ -165,13 +165,24 @@ export default function CourseDetail() {
 
         {/* ── Teacher ── */}
         <section className="cd-teacher animate-in" style={{animationDelay:'0.18s'}}>
-          <span className="text-label">Meet the teacher</span>
-          <h2 className="cd-teacher-name">{course.instructor.full_name}</h2>
-          <p className="cd-teacher-bio">
-            Expert instructor with years of experience in this domain.
-            Passionate about creating engaging and comprehensive learning experiences
-            that help students build real-world skills.
-          </p>
+          <div className="cd-teacher-content">
+            <div className="cd-teacher-info">
+              <span className="text-label">Meet the teacher</span>
+              <h2 className="cd-teacher-name">{course.instructor.full_name}</h2>
+              <p className="cd-teacher-bio">
+                Expert instructor with years of experience in this domain.
+                Passionate about creating engaging and comprehensive learning experiences
+                that help students build real-world skills.
+              </p>
+            </div>
+            <div className="cd-teacher-image-wrapper">
+              <img 
+                src={`https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100`} 
+                alt={course.instructor.full_name} 
+                className="cd-teacher-image" 
+              />
+            </div>
+          </div>
         </section>
       </div>
     </div>

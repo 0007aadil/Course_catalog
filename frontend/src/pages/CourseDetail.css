@@ -204,6 +204,30 @@
   max-width: 560px;
 }
 
+.cd-teacher-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.cd-teacher-info {
+  flex: 1;
+}
+
+.cd-teacher-image-wrapper {
+  flex-shrink: 0;
+}
+
+.cd-teacher-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  display: block;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .cd-hero {

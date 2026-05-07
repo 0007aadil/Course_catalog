@@ -58,6 +58,17 @@ export default function Lesson() {
               <span className="pill pill-accent">✓ Completed</span>
               <h1 className="ls-title">{lesson.title}</h1>
             </div>
+
+            <div className="ls-video-container">
+              <iframe 
+                src="https://www.youtube.com/embed/bJzb-RuUcMU?rel=0&modestbranding=1" 
+                title="Lesson Video" 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+              ></iframe>
+            </div>
+
             <div className="ls-content">
               {lesson.content.split('\n').map((p, i) =>
                 p.trim() ? <p key={i}>{p}</p> : null
