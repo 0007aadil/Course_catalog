@@ -12,29 +12,44 @@ export default function Navbar() {
     navigate('/');
   };
 
-  const isActive = (path) => location.pathname === path ? 'nav-link active' : 'nav-link';
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="site-nav">
-      <div className="nav-inner">
-        <div className="nav-left">
-          <Link to={user ? '/courses' : '/'} className="nav-brand">M.</Link>
-          <Link to="/courses" className={isActive('/courses')}>Explore</Link>
-          {user && <Link to="/my-courses" className={isActive('/my-courses')}>My Courses</Link>}
-          {user && (user.role === 'admin' || user.role === 'faculty') && (
-            <a href="http://127.0.0.1:8000/admin/" className="nav-link" target="_blank" rel="noreferrer">Dashboard</a>
-          )}
+    <nav className="navbar">
+      <div className="navbar-inner">
+        {/* Left: Brand + Links */}
+        <div className="navbar-left">
+          <Link to={user ? '/courses' : '/'} className="navbar-brand">M.</Link>
+          <div className="navbar-links">
+            <Link to="/courses" className={`navbar-link ${isActive('/courses') ? 'is-active' : ''}`}>
+              Explore
+            </Link>
+            {user && (
+              <Link to="/my-courses" className={`navbar-link ${isActive('/my-courses') ? 'is-active' : ''}`}>
+                My Courses
+              </Link>
+            )}
+            {user && (user.role === 'admin' || user.role === 'faculty') && (
+              <Link to="/faculty" className={`navbar-link ${isActive('/faculty') ? 'is-active' : ''}`}>
+                Dashboard
+              </Link>
+            )}
+          </div>
         </div>
-        <div className="nav-right">
+
+        {/* Right: Auth */}
+        <div className="navbar-right">
           {user ? (
             <>
-              <span className="nav-user">{user.username}</span>
-              <button onClick={handleLogout} className="nav-btn-ghost">Log out</button>
+              <div className="navbar-avatar" title={user.username}>
+                {(user.first_name?.[0] || user.username[0]).toUpperCase()}
+              </div>
+              <button onClick={handleLogout} className="navbar-btn-ghost">Log out</button>
             </>
           ) : (
             <>
-              <Link to="/login" className="nav-btn-ghost">Log in</Link>
-              <Link to="/signup" className="nav-btn-fill">Sign Up</Link>
+              <Link to="/login" className="navbar-btn-ghost">Log in</Link>
+              <Link to="/signup" className="navbar-btn-fill">Sign Up</Link>
             </>
           )}
         </div>

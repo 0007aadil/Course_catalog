@@ -12,6 +12,8 @@ const heroGradients = [
   'linear-gradient(135deg, #78350f 0%, #b45309 50%, #fbbf24 100%)',
 ];
 
+const icons = ['💻', '🧬', '🎨', '📊', '🚀'];
+
 export default function CourseDetail() {
   const { id } = useParams();
   const { user } = useAuth();
@@ -42,107 +44,122 @@ export default function CourseDetail() {
     setEnrolling(false);
   };
 
-  if (loading) return <div className="container" style={{padding:'4rem 2rem'}}><p style={{color:'#999'}}>Loading...</p></div>;
-  if (!course) return <div className="container" style={{padding:'4rem 2rem'}}><p>Course not found.</p></div>;
+  if (loading) return <div className="page-center"><p>Loading...</p></div>;
+  if (!course) return (
+    <div className="page-center" style={{flexDirection:'column',gap:'1rem'}}>
+      <p>Course not found.</p>
+      <Link to="/courses" className="btn btn-outline">← Back to Courses</Link>
+    </div>
+  );
 
   const progress = course.lesson_progress || {};
   const gradient = heroGradients[(parseInt(id) || 0) % heroGradients.length];
+  const icon = icons[((parseInt(id) || 0) - 1) % icons.length];
+  const completedCount = Object.values(progress).filter(Boolean).length;
 
   return (
     <div className="cd-page">
-      {/* ── Hero Section ── */}
-      <div className="cd-hero">
+      {/* ── Hero ── */}
+      <div className="cd-hero animate-in">
         <div className="cd-hero-image" style={{background: gradient}}>
-          <div className="cd-hero-image-overlay">
-            <span className="cd-hero-icon">
-              {['💻', '🧬', '🎨', '📊', '🚀'][((parseInt(id) || 0) - 1) % 5]}
-            </span>
+          <div className="card-image-overlay">
+            <span className="cd-hero-icon">{icon}</span>
           </div>
         </div>
         <div className="cd-hero-info">
-          {course.is_enrolled && (
-            <span className="cd-enrolled-tag">✓ Enrolled</span>
-          )}
+          {course.is_enrolled && <span className="cd-enrolled-badge">✓ Enrolled</span>}
           <h1 className="cd-hero-title">{course.title}</h1>
           <p className="cd-hero-instructor">
             A course by <strong>{course.instructor.full_name}</strong>
           </p>
           <div className="cd-hero-action">
             {!user ? (
-              <Link to="/login" className="cd-btn-enroll">Log in to Enroll</Link>
+              <Link to="/login" className="btn btn-primary btn-lg">Log in to Enroll</Link>
             ) : !course.is_enrolled ? (
-              <button onClick={handleEnroll} className="cd-btn-enroll" disabled={enrolling}>
-                {enrolling ? 'Enrolling...' : 'Enroll Now'}
+              <button onClick={handleEnroll} className="btn btn-primary btn-lg" disabled={enrolling}>
+                {enrolling ? 'Enrolling...' : 'Enroll Now — Free'}
               </button>
             ) : course.lessons.length > 0 ? (
-              <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="cd-btn-enroll cd-btn-go">
+              <Link to={`/courses/${course.id}/lessons/${course.lessons[0].id}`} className="btn btn-success btn-lg">
                 Start Learning →
               </Link>
             ) : (
-              <button className="cd-btn-enroll" disabled>Content coming soon</button>
+              <button className="btn btn-outline btn-lg" disabled>Content coming soon</button>
             )}
           </div>
         </div>
       </div>
 
-      {/* ── Info Bar ── */}
       <div className="container">
-        <div className="cd-info-bar animate-in">
+        {/* ── Info Bar ── */}
+        <div className="cd-info-bar animate-in" style={{animationDelay:'0.06s'}}>
           <div className="cd-info-item">
             <span className="cd-info-icon">📜</span>
-            <span>CERTIFICATE OF COMPLETION</span>
+            <span>Certificate of Completion</span>
           </div>
           <div className="cd-info-item">
             <span className="cd-info-icon">📚</span>
-            <span>{course.lessons.length} LESSONS</span>
+            <span>{course.lessons.length} Lessons</span>
           </div>
           <div className="cd-info-item">
             <span className="cd-info-icon">👤</span>
-            <span>BY {course.instructor.full_name.toUpperCase()}</span>
+            <span>By {course.instructor.full_name}</span>
           </div>
+          {course.is_enrolled && course.lessons.length > 0 && (
+            <div className="cd-info-item">
+              <span className="cd-info-icon">📈</span>
+              <span>{completedCount}/{course.lessons.length} Completed</span>
+            </div>
+          )}
         </div>
 
         {/* ── About ── */}
-        <div className="cd-about animate-in" style={{animationDelay: '0.1s'}}>
+        <div className="cd-about animate-in" style={{animationDelay:'0.1s'}}>
+          <h2 className="cd-about-heading">About this course</h2>
           <p className="cd-about-text">{course.long_description}</p>
         </div>
 
-        {/* ── Course Content (Table-style) ── */}
-        <section className="cd-content animate-in" style={{animationDelay: '0.15s'}}>
-          <span className="cd-content-label">Course Content</span>
-          <h2 className="cd-content-title">Explore Every<br/>Course Chapter</h2>
+        {/* ── Lessons ── */}
+        <section className="cd-lessons animate-in" style={{animationDelay:'0.14s'}}>
+          <div className="cd-lessons-header">
+            <div>
+              <span className="text-label">Course Content</span>
+              <h2 className="cd-lessons-title">Explore Every Chapter</h2>
+            </div>
+            <span className="text-caption">{course.lessons.length} lessons</span>
+          </div>
 
           <div className="cd-lessons-table">
-            <div className="cd-lessons-header">
-              <span className="cd-col-lesson">Lessons</span>
+            <div className="cd-lessons-table-head">
+              <span className="cd-col-lesson">Lesson</span>
               <span className="cd-col-status">Status</span>
               <span className="cd-col-action"></span>
             </div>
 
             {course.lessons.map((lesson, i) => {
-              const isCompleted = progress[String(lesson.id)];
+              const done = progress[String(lesson.id)];
               return (
-                <div className="cd-lesson-row" key={lesson.id}>
+                <div className="cd-lesson-row" key={lesson.id} style={{animationDelay:`${i * 0.03}s`}}>
                   <div className="cd-col-lesson">
-                    <span className="cd-lesson-badge">Lesson {i + 1}</span>
+                    <span className="cd-lesson-num">Lesson {i + 1}</span>
                     <span className="cd-lesson-name">{lesson.title}</span>
                   </div>
                   <div className="cd-col-status">
-                    {isCompleted ? (
-                      <span className="cd-status-done">✓ Done</span>
+                    {done ? (
+                      <span className="pill pill-accent">✓ Done</span>
                     ) : course.is_enrolled ? (
-                      <span className="cd-status-open">Available</span>
+                      <span className="pill">Available</span>
                     ) : (
-                      <span className="cd-status-locked">🔒</span>
+                      <span className="pill pill-outline">🔒 Locked</span>
                     )}
                   </div>
                   <div className="cd-col-action">
                     {course.is_enrolled ? (
-                      <Link to={`/courses/${course.id}/lessons/${lesson.id}`} className="cd-view-btn">
-                        View more
+                      <Link to={`/courses/${course.id}/lessons/${lesson.id}`} className="btn btn-sm btn-outline">
+                        View →
                       </Link>
                     ) : (
-                      <span className="cd-view-btn cd-view-disabled">Locked</span>
+                      <span className="btn btn-sm btn-ghost" style={{opacity:0.4,cursor:'default'}}>Locked</span>
                     )}
                   </div>
                 </div>
@@ -151,16 +168,16 @@ export default function CourseDetail() {
 
             {course.lessons.length === 0 && (
               <div className="cd-lesson-row">
-                <p style={{color:'#999', padding:'1rem 0'}}>No lessons available yet.</p>
+                <p className="text-caption" style={{padding:'1rem 0'}}>No lessons available yet.</p>
               </div>
             )}
           </div>
         </section>
 
-        {/* ── Meet the Teacher ── */}
-        <section className="cd-teacher animate-in" style={{animationDelay: '0.2s'}}>
-          <span className="cd-teacher-label">Meet the teacher</span>
-          <h2 className="cd-teacher-name">{course.instructor.full_name.toUpperCase()}</h2>
+        {/* ── Teacher ── */}
+        <section className="cd-teacher animate-in" style={{animationDelay:'0.18s'}}>
+          <span className="text-label">Meet the teacher</span>
+          <h2 className="cd-teacher-name">{course.instructor.full_name}</h2>
           <p className="cd-teacher-bio">
             Expert instructor with years of experience in this domain.
             Passionate about creating engaging and comprehensive learning experiences
