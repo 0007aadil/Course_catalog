@@ -4,15 +4,7 @@ import { coursesAPI, initCsrf } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import './CourseDetail.css';
 
-const heroGradients = [
-  'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
-  'linear-gradient(135deg, #2d1b69 0%, #6b21a8 50%, #a855f7 100%)',
-  'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)',
-  'linear-gradient(135deg, #134e4a 0%, #115e59 50%, #2dd4bf 100%)',
-  'linear-gradient(135deg, #78350f 0%, #b45309 50%, #fbbf24 100%)',
-];
-
-const icons = ['💻', '🧬', '🎨', '📊', '🚀'];
+import { getCourseImage } from '../utils/images';
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -53,17 +45,14 @@ export default function CourseDetail() {
   );
 
   const progress = course.lesson_progress || {};
-  const gradient = heroGradients[(parseInt(id) || 0) % heroGradients.length];
-  const icon = icons[((parseInt(id) || 0) - 1) % icons.length];
   const completedCount = Object.values(progress).filter(Boolean).length;
 
   return (
     <div className="cd-page">
       {/* ── Hero ── */}
       <div className="cd-hero animate-in">
-        <div className="cd-hero-image" style={{background: gradient}}>
-          <div className="card-image-overlay">
-            <span className="cd-hero-icon">{icon}</span>
+        <div className="cd-hero-image" style={{backgroundImage: `url(${getCourseImage(course.id)})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+          <div className="card-image-overlay" style={{background: 'rgba(0,0,0,0.2)'}}>
           </div>
         </div>
         <div className="cd-hero-info">
