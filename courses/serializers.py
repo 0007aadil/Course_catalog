@@ -35,7 +35,7 @@ class CourseListSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'short_description', 'instructor', 'lesson_count', 'created_at')
 
     def get_lesson_count(self, obj):
-        return obj.lessons.count()
+        return len(obj.lessons.all())
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
@@ -97,8 +97,17 @@ class CourseWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ('id', 'title', 'short_description', 'long_description')
+        extra_kwargs = {
+            'short_description': {'required': False, 'allow_blank': True},
+            'long_description': {'required': False, 'allow_blank': True},
+        }
 
 class LessonWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = ('id', 'title', 'content', 'video_url', 'document_url', 'order')
+        extra_kwargs = {
+            'content': {'required': False, 'allow_blank': True},
+            'video_url': {'required': False, 'allow_blank': True, 'allow_null': True},
+            'document_url': {'required': False, 'allow_blank': True, 'allow_null': True},
+        }

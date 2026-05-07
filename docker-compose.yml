@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  # ── Django Backend ──
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mindpath-backend
+    env_file: .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=mooc_project.settings
+    expose:
+      - "8000"
+    volumes:
+      - static_data:/app/staticfiles
+    restart: unless-stopped
+
+  # ── React Frontend + Nginx Reverse Proxy ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mindpath-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  static_data:

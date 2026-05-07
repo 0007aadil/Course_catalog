@@ -12,6 +12,7 @@ build/
 *.sqlite3
 db.sqlite3
 /static/
+staticfiles/
 media/
 
 # Virtual environments

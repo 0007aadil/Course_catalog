@@ -37,15 +37,29 @@ export default function LessonEditor() {
     e.preventDefault();
     setSaving(true);
     setError('');
+    // Convert empty URL strings to null so the backend doesn't reject them
+    const payload = {
+      ...form,
+      video_url: form.video_url?.trim() || null,
+      document_url: form.document_url?.trim() || null,
+    };
     try {
       if (isNew) {
-        await facultyAPI.createLesson(courseId, form);
+        await facultyAPI.createLesson(courseId, payload);
       } else {
-        await facultyAPI.updateLesson(courseId, lessonId, form);
+        await facultyAPI.updateLesson(courseId, lessonId, payload);
       }
       navigate(`/faculty/courses/${courseId}/edit`);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to save lesson.');
+      console.error("Save lesson error:", err.response || err);
+      if (err.response?.data && typeof err.response.data === 'object' && !err.response.data.detail) {
+        const messages = Object.entries(err.response.data)
+          .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(' ') : msgs}`)
+          .join(' | ');
+        setError(messages || 'Validation failed.');
+      } else {
+        setError(err.response?.data?.detail || err.message || 'Failed to save lesson.');
+      }
     }
     setSaving(false);
   };
@@ -138,7 +152,6 @@ export default function LessonEditor() {
                 onChange={e => setForm({...form, content: e.target.value})}
                 placeholder="Write your lesson content here..."
                 rows={12}
-                required
               />
             </div>
 

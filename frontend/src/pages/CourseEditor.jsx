@@ -44,7 +44,16 @@ export default function CourseEditor() {
         alert('Course saved successfully.');
       }
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to save course.');
+      console.error("Save course error:", err.response || err);
+      if (err.response?.data && typeof err.response.data === 'object' && !err.response.data.detail) {
+        // Validation errors usually come as an object with field names as keys
+        const messages = Object.entries(err.response.data)
+          .map(([field, msgs]) => `${field}: ${Array.isArray(msgs) ? msgs.join(' ') : msgs}`)
+          .join(' | ');
+        setError(messages || 'Validation failed.');
+      } else {
+        setError(err.response?.data?.detail || err.message || 'Failed to save course.');
+      }
     }
     setSaving(false);
   };
@@ -107,7 +116,6 @@ export default function CourseEditor() {
                 onChange={e => setForm({...form, short_description: e.target.value})}
                 placeholder="A brief summary for the catalog card"
                 maxLength={300}
-                required
               />
             </div>
 
@@ -118,7 +126,6 @@ export default function CourseEditor() {
                 onChange={e => setForm({...form, long_description: e.target.value})}
                 placeholder="Full details about what students will learn..."
                 rows={6}
-                required
               />
             </div>
 

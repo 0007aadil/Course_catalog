@@ -17,7 +17,7 @@ class CourseListView(generics.ListAPIView):
     serializer_class = CourseListSerializer
 
     def get_queryset(self):
-        qs = Course.objects.all()
+        qs = Course.objects.select_related('instructor').prefetch_related('lessons').all()
         user = self.request.user
         if user.is_authenticated and not user.is_superuser and user.groups.filter(name='Faculty').exists():
             qs = qs.filter(instructor=user)
@@ -29,7 +29,7 @@ class CourseDetailView(generics.RetrieveAPIView):
     serializer_class = CourseDetailSerializer
 
     def get_queryset(self):
-        qs = Course.objects.all()
+        qs = Course.objects.select_related('instructor').prefetch_related('lessons').all()
         user = self.request.user
         if user.is_authenticated and not user.is_superuser and user.groups.filter(name='Faculty').exists():
             qs = qs.filter(instructor=user)
@@ -113,8 +113,8 @@ def faculty_dashboard_view(request):
             'id': c.id,
             'title': c.title,
             'short_description': c.short_description,
-            'lesson_count': c.lessons.count(),
-            'enrollment_count': c.enrollments.count(),
+            'lesson_count': len(c.lessons.all()),
+            'enrollment_count': len(c.enrollments.all()),
             'created_at': c.created_at.isoformat() if c.created_at else None,
         })
     total_students = Enrollment.objects.filter(course__instructor=user).values('user').distinct().count()

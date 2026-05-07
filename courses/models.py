@@ -4,8 +4,8 @@ from django.conf import settings
 
 class Course(models.Model):
     title = models.CharField(max_length=200)
-    short_description = models.CharField(max_length=300)
-    long_description = models.TextField()
+    short_description = models.CharField(max_length=300, blank=True, default='')
+    long_description = models.TextField(blank=True, default='')
     instructor = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
         related_name='courses_created',
@@ -25,7 +25,7 @@ class Lesson(models.Model):
         Course, on_delete=models.CASCADE, related_name='lessons'
     )
     title = models.CharField(max_length=200)
-    content = models.TextField()
+    content = models.TextField(blank=True, default='')
     video_url = models.URLField(blank=True, null=True, help_text="Optional YouTube embed URL or direct video link")
     document_url = models.URLField(blank=True, null=True, help_text="Optional link to a PDF or resource document")
     order = models.PositiveIntegerField(default=0)

@@ -20,8 +20,9 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Fetch CSRF cookie on startup
+// Fetch CSRF cookie on startup (only if missing)
 export async function initCsrf() {
+  if (getCsrfToken()) return;
   try {
     await api.get('/auth/csrf/');
   } catch (e) {
