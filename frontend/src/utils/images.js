@@ -10,3 +10,14 @@ export const courseImages = [
 ];
 
 export const getCourseImage = (id) => courseImages[(id || 0) % courseImages.length];
+
+export const instructorImages = [
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100',
+];
+
+export const getInstructorImage = (id) => instructorImages[(id || 0) % instructorImages.length];

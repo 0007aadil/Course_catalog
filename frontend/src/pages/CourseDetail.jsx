@@ -4,7 +4,7 @@ import { coursesAPI, initCsrf } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import './CourseDetail.css';
 
-import { getCourseImage } from '../utils/images';
+import { getCourseImage, getInstructorImage } from '../utils/images';
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -177,7 +177,7 @@ export default function CourseDetail() {
             </div>
             <div className="cd-teacher-image-wrapper">
               <img 
-                src={`https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80&sat=-100`} 
+                src={getInstructorImage(course.instructor.id)} 
                 alt={course.instructor.full_name} 
                 className="cd-teacher-image" 
               />

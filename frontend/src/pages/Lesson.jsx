@@ -38,6 +38,7 @@ export default function Lesson() {
   const currentIdx = all_lessons.findIndex(l => l.id === lesson.id);
   const nextLesson = all_lessons[currentIdx + 1];
   const prevLesson = all_lessons[currentIdx - 1];
+  const allCompleted = Object.values(progress).filter(Boolean).length === all_lessons.length;
 
   return (
     <div className="lesson-page">
@@ -59,15 +60,17 @@ export default function Lesson() {
               <h1 className="ls-title">{lesson.title}</h1>
             </div>
 
-            <div className="ls-video-container">
-              <iframe 
-                src="https://www.youtube.com/embed/bJzb-RuUcMU?rel=0&modestbranding=1" 
-                title="Lesson Video" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-              ></iframe>
-            </div>
+            {lesson.id % 2 !== 0 && (
+              <div className="ls-video-container">
+                <iframe 
+                  src="https://www.youtube.com/embed/bJzb-RuUcMU?rel=0&modestbranding=1" 
+                  title="Lesson Video" 
+                  frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              </div>
+            )}
 
             <div className="ls-content">
               {lesson.content.split('\n').map((p, i) =>
@@ -89,8 +92,12 @@ export default function Lesson() {
                 <Link to={`/courses/${course.id}/lessons/${nextLesson.id}`} className="btn btn-primary">
                   Next Lesson →
                 </Link>
+              ) : allCompleted ? (
+                <Link to={`/courses/${course.id}/certificate`} className="btn btn-success" style={{animation: 'pulse 2s infinite'}}>
+                  🎉 View Certificate
+                </Link>
               ) : (
-                <span className="btn btn-success" style={{pointerEvents:'none'}}>🎉 Course Complete!</span>
+                <span className="btn btn-ghost" style={{pointerEvents:'none'}}>Course Complete!</span>
               )}
             </div>
           </main>

@@ -11,6 +11,7 @@ import MyCourses from './pages/MyCourses';
 import FacultyDashboard from './pages/FacultyDashboard';
 import CourseEditor from './pages/CourseEditor';
 import LessonEditor from './pages/LessonEditor';
+import Certificate from './pages/Certificate';
 
 function LoadingScreen() {
   return (
@@ -66,6 +67,9 @@ function AppContent() {
         <Route path="/courses/:id" element={<CourseDetail />} />
         <Route path="/courses/:courseId/lessons/:lessonId" element={
           <RequireAuth><Lesson /></RequireAuth>
+        } />
+        <Route path="/courses/:id/certificate" element={
+          <RequireAuth><Certificate /></RequireAuth>
         } />
         <Route path="/my-courses" element={
           <RequireAuth><MyCourses /></RequireAuth>
