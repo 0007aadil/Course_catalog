@@ -54,6 +54,7 @@ export const facultyAPI = {
   updateCourse: (id, data) => api.put(`/faculty/courses/${id}/`, data),
   deleteCourse: (id) => api.delete(`/faculty/courses/${id}/`),
   // Lessons
+  getLesson: (courseId, lessonId) => api.get(`/faculty/courses/${courseId}/lessons/${lessonId}/`),
   createLesson: (courseId, data) => api.post(`/faculty/courses/${courseId}/lessons/`, data),
   updateLesson: (courseId, lessonId, data) => api.put(`/faculty/courses/${courseId}/lessons/${lessonId}/`, data),
   deleteLesson: (courseId, lessonId) => api.delete(`/faculty/courses/${courseId}/lessons/${lessonId}/`),

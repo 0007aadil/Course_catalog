@@ -16,21 +16,17 @@ export default function LessonEditor() {
   useEffect(() => {
     if (!isNew) {
       // Need to fetch the specific lesson details.
-      // Since we don't have a specific GET /faculty/lessons/:id yet,
-      // we can fetch the course and extract it, or rely on the existing lesson endpoint.
-      // The easiest way is to use the existing `coursesAPI.lesson` which returns the lesson.
-      import('../api/client').then(({ coursesAPI }) => {
-        coursesAPI.lesson(courseId, lessonId)
-          .then(res => {
-            setForm({
-              title: res.data.lesson.title,
-              content: res.data.lesson.content,
-              order: res.data.lesson.order,
-            });
-          })
-          .catch(() => setError('Failed to load lesson.'))
-          .finally(() => setLoading(false));
-      });
+      // Use facultyAPI to get the lesson, avoiding enrollment checks
+      facultyAPI.getLesson(courseId, lessonId)
+        .then(res => {
+          setForm({
+            title: res.data.title,
+            content: res.data.content,
+            order: res.data.order,
+          });
+        })
+        .catch(() => setError('Failed to load lesson.'))
+        .finally(() => setLoading(false));
     }
   }, [courseId, lessonId, isNew]);
 

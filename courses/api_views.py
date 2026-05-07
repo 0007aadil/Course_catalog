@@ -14,14 +14,26 @@ from .serializers import (
 
 class CourseListView(generics.ListAPIView):
     """GET /api/courses/ — list all courses."""
-    queryset = Course.objects.all()
     serializer_class = CourseListSerializer
+
+    def get_queryset(self):
+        qs = Course.objects.all()
+        user = self.request.user
+        if user.is_authenticated and not user.is_superuser and user.groups.filter(name='Faculty').exists():
+            qs = qs.filter(instructor=user)
+        return qs
 
 
 class CourseDetailView(generics.RetrieveAPIView):
     """GET /api/courses/<id>/ — course detail."""
-    queryset = Course.objects.all()
     serializer_class = CourseDetailSerializer
+
+    def get_queryset(self):
+        qs = Course.objects.all()
+        user = self.request.user
+        if user.is_authenticated and not user.is_superuser and user.groups.filter(name='Faculty').exists():
+            qs = qs.filter(instructor=user)
+        return qs
 
     def get_serializer_context(self):
         ctx = super().get_serializer_context()
@@ -33,6 +45,9 @@ class CourseDetailView(generics.RetrieveAPIView):
 @permission_classes([permissions.IsAuthenticated])
 def enroll_view(request, pk):
     """POST /api/courses/<id>/enroll/"""
+    if request.user.groups.filter(name='Faculty').exists() and not request.user.is_superuser:
+        return Response({'detail': 'Faculty cannot enroll in courses.'}, status=status.HTTP_403_FORBIDDEN)
+
     course = get_object_or_404(Course, pk=pk)
     enrollment, created = Enrollment.objects.get_or_create(
         user=request.user, course=course
