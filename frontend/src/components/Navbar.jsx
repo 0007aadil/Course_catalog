@@ -21,10 +21,12 @@ export default function Navbar() {
         <div className="navbar-left">
           <Link to={user ? '/courses' : '/'} className="navbar-brand">M.</Link>
           <div className="navbar-links">
-            <Link to="/courses" className={`navbar-link ${isActive('/courses') ? 'is-active' : ''}`}>
-              Explore
-            </Link>
-            {user && (
+            {(!user || user.role === 'student') && (
+              <Link to="/courses" className={`navbar-link ${isActive('/courses') ? 'is-active' : ''}`}>
+                Explore
+              </Link>
+            )}
+            {user && user.role === 'student' && (
               <Link to="/my-courses" className={`navbar-link ${isActive('/my-courses') ? 'is-active' : ''}`}>
                 My Courses
               </Link>

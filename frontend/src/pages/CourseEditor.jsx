@@ -53,8 +53,9 @@ export default function CourseEditor() {
       try {
         await facultyAPI.deleteCourse(id);
         navigate('/faculty');
-      } catch {
-        alert('Failed to delete course.');
+      } catch (err) {
+        alert('Failed to delete course: ' + (err.response?.data?.detail || err.message));
+        console.error(err);
       }
     }
   };
