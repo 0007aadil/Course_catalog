@@ -57,7 +57,7 @@ export default function Landing() {
           Course Platform <span className="l-hero-tag">Open for Enrollment</span>
         </div>
         <h1 className="l-hero-title animate-up" style={{animationDelay:'0.08s'}}>
-          MOOC<br/>Catalog
+          MindPath
         </h1>
         <p className="l-hero-desc animate-up" style={{animationDelay:'0.16s'}}>
           Discover expert-led courses, track your progress, and build skills that matter — all in one beautifully simple place.
@@ -145,7 +145,7 @@ export default function Landing() {
         <div className="container">
           <div className="l-footer-inner">
             <span className="l-footer-brand">M.</span>
-            <p className="l-footer-copy">© 2026 MOOC Catalog. Built for learners.</p>
+            <p className="l-footer-copy">© 2026 MindPath. Built for learners.</p>
           </div>
         </div>
       </footer>

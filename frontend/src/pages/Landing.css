@@ -63,11 +63,11 @@
 }
 
 .l-hero-title {
-  font-size: clamp(4.5rem, 13vw, 10rem);
-  font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 0.88;
-  margin-bottom: 2.25rem;
+  font-size: clamp(4rem, 11vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 2rem;
   color: var(--text-primary);
 }
 

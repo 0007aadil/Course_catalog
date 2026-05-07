@@ -41,7 +41,7 @@ export default function Certificate() {
         <div className="cert-container">
           <div className="cert-inner">
             <div className="cert-header">
-              <span className="cert-brand">MOOC ACADEMY</span>
+              <span className="cert-brand">MINDPATH</span>
               <span className="cert-id">ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</span>
             </div>
             

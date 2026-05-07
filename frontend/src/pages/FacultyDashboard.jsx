@@ -4,8 +4,6 @@ import { coursesAPI } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import './FacultyDashboard.css';
 
-const courseIcons = ['💻', '🧬', '🎨', '📊', '🚀', '🎯', '🤖', '☁️', '🔒', '📱', '⚙️', '🎓'];
-
 export default function FacultyDashboard() {
   const { user } = useAuth();
   const [data, setData] = useState(null);
@@ -88,9 +86,6 @@ export default function FacultyDashboard() {
                   style={{animationDelay:`${i * 0.04}s`}}
                 >
                   <div className="fd-td-course">
-                    <div className="fd-course-icon">
-                      {courseIcons[i % courseIcons.length]}
-                    </div>
                     <div>
                       <span className="fd-course-title">{course.title}</span>
                       <span className="fd-course-desc">{course.short_description}</span>

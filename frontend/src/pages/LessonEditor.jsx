@@ -8,7 +8,7 @@ export default function LessonEditor() {
   const navigate = useNavigate();
   const isNew = !lessonId;
 
-  const [form, setForm] = useState({ title: '', content: '', order: 1 });
+  const [form, setForm] = useState({ title: '', content: '', video_url: '', document_url: '', order: 1 });
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -21,9 +21,11 @@ export default function LessonEditor() {
       facultyAPI.getLesson(courseId, lessonId)
         .then(res => {
           setForm({
-            title: res.data.title,
-            content: res.data.content,
-            order: res.data.order,
+            title: res.data.title || '',
+            content: res.data.content || '',
+            video_url: res.data.video_url || '',
+            document_url: res.data.document_url || '',
+            order: res.data.order || 1,
           });
         })
         .catch(() => setError('Failed to load lesson.'))
@@ -106,6 +108,26 @@ export default function LessonEditor() {
                 onChange={e => setForm({...form, order: parseInt(e.target.value) || 1})}
                 min="1"
                 required
+              />
+            </div>
+
+            <div className="ce-field">
+              <label>Video URL (Optional)</label>
+              <input
+                type="url"
+                value={form.video_url}
+                onChange={e => setForm({...form, video_url: e.target.value})}
+                placeholder="e.g. https://www.youtube.com/embed/..."
+              />
+            </div>
+
+            <div className="ce-field">
+              <label>Document URL (Optional)</label>
+              <input
+                type="url"
+                value={form.document_url}
+                onChange={e => setForm({...form, document_url: e.target.value})}
+                placeholder="e.g. https://example.com/document.pdf"
               />
             </div>
 

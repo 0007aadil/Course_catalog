@@ -26,6 +26,8 @@ class Lesson(models.Model):
     )
     title = models.CharField(max_length=200)
     content = models.TextField()
+    video_url = models.URLField(blank=True, null=True, help_text="Optional YouTube embed URL or direct video link")
+    document_url = models.URLField(blank=True, null=True, help_text="Optional link to a PDF or resource document")
     order = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
 
