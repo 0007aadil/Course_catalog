@@ -83,3 +83,29 @@ class MyCoursesView(generics.ListAPIView):
         return Enrollment.objects.filter(
             user=self.request.user
         ).select_related('course', 'course__instructor')
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def faculty_dashboard_view(request):
+    """GET /api/faculty/dashboard/ — faculty's own courses + stats."""
+    user = request.user
+    courses = Course.objects.filter(instructor=user).prefetch_related('lessons', 'enrollments')
+    data = []
+    for c in courses:
+        data.append({
+            'id': c.id,
+            'title': c.title,
+            'short_description': c.short_description,
+            'lesson_count': c.lessons.count(),
+            'enrollment_count': c.enrollments.count(),
+            'created_at': c.created_at.isoformat() if c.created_at else None,
+        })
+    total_students = Enrollment.objects.filter(course__instructor=user).values('user').distinct().count()
+    return Response({
+        'courses': data,
+        'total_courses': len(data),
+        'total_students': total_students,
+        'total_lessons': sum(d['lesson_count'] for d in data),
+    })
+

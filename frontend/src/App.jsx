@@ -8,6 +8,7 @@ import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import Lesson from './pages/Lesson';
 import MyCourses from './pages/MyCourses';
+import FacultyDashboard from './pages/FacultyDashboard';
 
 function LoadingScreen() {
   return (
@@ -39,6 +40,7 @@ function AppContent() {
         <Route path="/courses/:id" element={<CourseDetail />} />
         <Route path="/courses/:courseId/lessons/:lessonId" element={<Lesson />} />
         <Route path="/my-courses" element={<MyCourses />} />
+        <Route path="/faculty" element={<FacultyDashboard />} />
       </Routes>
     </>
   );

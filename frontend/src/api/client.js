@@ -44,6 +44,7 @@ export const coursesAPI = {
   enroll: (id) => api.post(`/courses/${id}/enroll/`),
   lesson: (courseId, lessonId) => api.get(`/courses/${courseId}/lessons/${lessonId}/`),
   myCourses: () => api.get('/my-courses/'),
+  facultyDashboard: () => api.get('/faculty/dashboard/'),
 };
 
 export default api;

@@ -16,7 +16,7 @@ export default function Login() {
     try {
       const user = await login(username, password);
       if (user.role === 'admin' || user.role === 'faculty') {
-        window.location.href = 'http://127.0.0.1:8000/admin/';
+        navigate('/faculty');
       } else {
         navigate('/courses');
       }
