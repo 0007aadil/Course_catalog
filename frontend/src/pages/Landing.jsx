@@ -1,30 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { coursesAPI } from '../api/client';
+import { getCourseImage } from '../utils/images';
 import './Landing.css';
-
-const featured = [
-  {
-    title: 'Web Development with Django',
-    bg: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%)',
-    icon: '💻',
-    instructor: 'Rajesh Sharma',
-    score: '4.8',
-  },
-  {
-    title: 'Python for Data Science',
-    bg: 'linear-gradient(135deg, #2d1b69 0%, #6b21a8 50%, #a855f7 100%)',
-    icon: '🧬',
-    instructor: 'Priya Gupta',
-    score: '4.9',
-  },
-  {
-    title: 'Machine Learning Basics',
-    bg: 'linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%)',
-    icon: '🤖',
-    instructor: 'Expert Faculty',
-    score: '5.0',
-  },
-];
 
 const stats = [
   { num: '50+', label: 'Courses' },
@@ -36,6 +15,13 @@ const stats = [
 export default function Landing() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [featured, setFeatured] = useState([]);
+
+  useEffect(() => {
+    coursesAPI.list()
+      .then(res => setFeatured(res.data.slice(0, 3)))
+      .catch(() => setFeatured([]));
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -92,22 +78,19 @@ export default function Landing() {
           </h2>
           <div className="l-featured-grid">
             {featured.map((c, i) => (
-              <Link to="/courses" key={i} className="l-card animate-in" style={{animationDelay:`${i * 0.08}s`}}>
-                <div className="card-image" style={{background: c.bg}}>
-                  <div className="card-image-overlay">
-                    <span className="card-icon">{c.icon}</span>
-                  </div>
+              <Link to={`/courses/${c.id}`} key={c.id} className="l-card animate-in" style={{animationDelay:`${i * 0.08}s`}}>
+                <div className="card-image" style={{backgroundImage: `url(${getCourseImage(c.id)})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
                 </div>
                 <div className="card-body">
                   <h3 className="card-title">{c.title}</h3>
                   <div className="card-meta">
                     <div className="l-card-row">
                       <span className="l-card-label">Instructor</span>
-                      <span className="l-card-value">{c.instructor}</span>
+                      <span className="l-card-value">{c.instructor.full_name}</span>
                     </div>
                     <div className="l-card-bottom">
                       <div className="score">
-                        <span className="score-text">Score {c.score}/5</span>
+                        <span className="score-text">Score 5.0/5</span>
                         <span className="score-bar"></span>
                       </div>
                       <span className="l-card-arrow">→</span>
@@ -116,6 +99,11 @@ export default function Landing() {
                 </div>
               </Link>
             ))}
+          </div>
+
+          <div className="l-view-all animate-in" style={{animationDelay: '0.3s'}}>
+            <span>Choose from over <strong>hundreds</strong> of courses</span>
+            <Link to="/courses" className="l-view-all-link">→ View Academy</Link>
           </div>
         </div>
       </section>
