@@ -12,6 +12,7 @@ export default function LessonEditor() {
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     if (!isNew) {
@@ -48,13 +49,13 @@ export default function LessonEditor() {
   };
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this lesson?')) {
-      try {
-        await facultyAPI.deleteLesson(courseId, lessonId);
-        navigate(`/faculty/courses/${courseId}/edit`);
-      } catch {
-        alert('Failed to delete lesson.');
-      }
+    try {
+      await facultyAPI.deleteLesson(courseId, lessonId);
+      navigate(`/faculty/courses/${courseId}/edit`);
+    } catch (err) {
+      alert('Failed to delete lesson: ' + (err.response?.data?.detail || err.message));
+      console.error(err);
+      setConfirmDelete(false);
     }
   };
 
@@ -71,9 +72,15 @@ export default function LessonEditor() {
           <div className="ce-header">
             <h1 className="ce-title">{isNew ? 'Add Lesson' : 'Edit Lesson'}</h1>
             {!isNew && (
-              <button onClick={handleDelete} className="btn btn-outline" style={{color: 'var(--accent-red)', borderColor: 'var(--accent-red)'}}>
-                Delete Lesson
-              </button>
+              confirmDelete ? (
+                <button type="button" onClick={handleDelete} className="btn" style={{backgroundColor: 'var(--accent-red)', color: '#fff', border: 'none'}}>
+                  Click again to confirm
+                </button>
+              ) : (
+                <button type="button" onClick={() => setConfirmDelete(true)} className="btn btn-outline" style={{color: 'var(--accent-red)', borderColor: 'var(--accent-red)'}}>
+                  Delete Lesson
+                </button>
+              )
             )}
           </div>
 
