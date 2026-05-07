@@ -25,7 +25,7 @@ export async function initCsrf() {
   if (getCsrfToken()) return;
   try {
     await api.get('/auth/csrf/');
-  } catch (e) {
+  } catch {
     // ignore
   }
 }

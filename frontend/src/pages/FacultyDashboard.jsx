@@ -97,7 +97,6 @@ export default function FacultyDashboard() {
                     <span className="pill pill-accent">{course.enrollment_count} enrolled</span>
                   </div>
                   <div className="fd-td-action">
-                    <Link to={`/courses/${course.id}`} className="btn btn-sm btn-outline">View</Link>
                     <Link
                       to={`/faculty/courses/${course.id}/edit`}
                       className="btn btn-sm btn-ghost"
