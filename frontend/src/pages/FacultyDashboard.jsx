@@ -30,14 +30,12 @@ export default function FacultyDashboard() {
             <span className="text-label">Faculty Dashboard</span>
             <h1 className="fd-title">Welcome back, {user?.first_name || user?.username}</h1>
           </div>
-          <a
-            href="http://127.0.0.1:8000/admin/"
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/faculty/courses/new"
             className="btn btn-outline"
           >
-            Open Admin Panel →
-          </a>
+            Create New Course →
+          </Link>
         </div>
 
         {/* ── Stats ── */}
@@ -67,15 +65,13 @@ export default function FacultyDashboard() {
             <div className="fd-empty">
               <div className="my-empty-icon">📝</div>
               <p>You haven't created any courses yet.</p>
-              <a
-                href="http://127.0.0.1:8000/admin/courses/course/add/"
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                to="/faculty/courses/new"
                 className="btn btn-primary"
                 style={{marginTop:'1rem'}}
               >
                 Create First Course
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="fd-table">
@@ -108,14 +104,12 @@ export default function FacultyDashboard() {
                   </div>
                   <div className="fd-td-action">
                     <Link to={`/courses/${course.id}`} className="btn btn-sm btn-outline">View</Link>
-                    <a
-                      href={`http://127.0.0.1:8000/admin/courses/course/${course.id}/change/`}
-                      target="_blank"
-                      rel="noreferrer"
+                    <Link
+                      to={`/faculty/courses/${course.id}/edit`}
                       className="btn btn-sm btn-ghost"
                     >
                       Edit
-                    </a>
+                    </Link>
                   </div>
                 </div>
               ))}

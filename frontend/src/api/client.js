@@ -47,4 +47,16 @@ export const coursesAPI = {
   facultyDashboard: () => api.get('/faculty/dashboard/'),
 };
 
+// Faculty CRUD
+export const facultyAPI = {
+  // Courses
+  createCourse: (data) => api.post('/faculty/courses/', data),
+  updateCourse: (id, data) => api.put(`/faculty/courses/${id}/`, data),
+  deleteCourse: (id) => api.delete(`/faculty/courses/${id}/`),
+  // Lessons
+  createLesson: (courseId, data) => api.post(`/faculty/courses/${courseId}/lessons/`, data),
+  updateLesson: (courseId, lessonId, data) => api.put(`/faculty/courses/${courseId}/lessons/${lessonId}/`, data),
+  deleteLesson: (courseId, lessonId) => api.delete(`/faculty/courses/${courseId}/lessons/${lessonId}/`),
+};
+
 export default api;

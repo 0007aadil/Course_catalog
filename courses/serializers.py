@@ -84,3 +84,13 @@ class UserSerializer(serializers.ModelSerializer):
         if obj.groups.filter(name='Faculty').exists():
             return 'faculty'
         return 'student'
+
+class CourseWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('id', 'title', 'short_description', 'long_description')
+
+class LessonWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = ('id', 'title', 'content', 'order')

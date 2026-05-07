@@ -9,6 +9,8 @@ import CourseDetail from './pages/CourseDetail';
 import Lesson from './pages/Lesson';
 import MyCourses from './pages/MyCourses';
 import FacultyDashboard from './pages/FacultyDashboard';
+import CourseEditor from './pages/CourseEditor';
+import LessonEditor from './pages/LessonEditor';
 
 function LoadingScreen() {
   return (
@@ -70,6 +72,18 @@ function AppContent() {
         } />
         <Route path="/faculty" element={
           <RequireFaculty><FacultyDashboard /></RequireFaculty>
+        } />
+        <Route path="/faculty/courses/new" element={
+          <RequireFaculty><CourseEditor /></RequireFaculty>
+        } />
+        <Route path="/faculty/courses/:id/edit" element={
+          <RequireFaculty><CourseEditor /></RequireFaculty>
+        } />
+        <Route path="/faculty/courses/:id/lessons/new" element={
+          <RequireFaculty><LessonEditor /></RequireFaculty>
+        } />
+        <Route path="/faculty/courses/:id/lessons/:lessonId/edit" element={
+          <RequireFaculty><LessonEditor /></RequireFaculty>
         } />
       </Routes>
     </>

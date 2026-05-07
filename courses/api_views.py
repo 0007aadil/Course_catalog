@@ -1,4 +1,4 @@
-from rest_framework import generics, status, permissions
+from rest_framework import generics, status, permissions, viewsets
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -8,6 +8,7 @@ from .models import Course, Lesson, Enrollment, LessonProgress
 from .serializers import (
     CourseListSerializer, CourseDetailSerializer,
     LessonSerializer, EnrollmentSerializer,
+    CourseWriteSerializer, LessonWriteSerializer,
 )
 
 
@@ -109,3 +110,28 @@ def faculty_dashboard_view(request):
         'total_lessons': sum(d['lesson_count'] for d in data),
     })
 
+
+class FacultyCourseViewSet(viewsets.ModelViewSet):
+    """CRUD for Faculty's own courses."""
+    serializer_class = CourseWriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Course.objects.filter(instructor=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(instructor=self.request.user)
+
+
+class FacultyLessonViewSet(viewsets.ModelViewSet):
+    """CRUD for Lessons within a specific course owned by Faculty."""
+    serializer_class = LessonWriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        course_pk = self.kwargs.get('course_pk')
+        return Lesson.objects.filter(course__id=course_pk, course__instructor=self.request.user)
+
+    def perform_create(self, serializer):
+        course = get_object_or_404(Course, id=self.kwargs.get('course_pk'), instructor=self.request.user)
+        serializer.save(course=course)
